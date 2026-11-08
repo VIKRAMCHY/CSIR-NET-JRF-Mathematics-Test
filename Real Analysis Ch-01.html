@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MATHYATRA | CSIR-NET Full Pattern Test (Part A + B + C)</title>
+  
+  <!-- MathJax Configuration -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-hover: #1d4ed8;
+      --secondary: #0d9488;
+      --part-a-color: #7c3aed;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #cbd5e1;
+      --correct: #15803d;
+      --correct-bg: #dcfce7;
+      --wrong: #b91c1c;
+      --wrong-bg: #fee2e2;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      line-height: 1.65;
+    }
+
+    /* Name Entry Modal Overlay */
+    #nameModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.88);
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-box {
+      background: #fff;
+      padding: 32px;
+      border-radius: 12px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      text-align: center;
+    }
+
+    .modal-box h2 {
+      color: var(--primary);
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .modal-box p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .modal-box input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      margin-bottom: 20px;
+      text-align: center;
+      outline: none;
+    }
+    .modal-box input:focus { border-color: var(--primary); }
+
+    .modal-box button {
+      width: 100%;
+      padding: 13px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .modal-box button:hover { background: var(--primary-hover); }
+
+    /* Top Sticky Navigation */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .brand {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .brand span {
+      font-weight: 400;
+      font-size: 0.88rem;
+      opacity: 0.9;
+      display: block;
+    }
+
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .user-badge {
+      background: rgba(255,255,255,0.18);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .timer-badge {
+      background: #fff;
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      min-width: 130px;
+      text-align: center;
+    }
+
+    .btn {
+      padding: 8px 15px;
+      border-radius: 6px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .btn-retake { background: #f59e0b; color: #fff; }
+    .btn-retake:hover { background: #d97706; }
+
+    .btn-download { background: var(--secondary); color: #fff; }
+    .btn-download:hover { background: #0f766e; }
+
+    .container {
+      max-width: 980px;
+      margin: 24px auto;
+      padding: 0 16px 50px 16px;
+    }
+
+    .dashboard-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .score-banner {
+      display: none;
+      background: var(--correct-bg);
+      border: 2px solid var(--correct);
+      padding: 22px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .score-banner h2 {
+      margin: 0 0 10px 0;
+      color: var(--correct);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .stat-box {
+      background: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .stat-val {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .section-banner {
+      background: #1e293b;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 8px;
+      margin: 30px 0 16px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .section-banner.part-a {
+      background: var(--part-a-color);
+    }
+
+    .q-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+
+    .q-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 700;
+      border-bottom: 1px dashed #e2e8f0;
+      padding-bottom: 6px;
+    }
+
+    .q-text {
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+      color: #0f172a;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .opt-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .opt-label:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .opt-label input {
+      margin-top: 5px;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+
+    .sol-box {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 18px;
+      background: #f8fafc;
+      border-left: 4px solid var(--secondary);
+      border-radius: 4px;
+      font-size: 0.95rem;
+      color: #1e293b;
+    }
+
+    .submit-footer {
+      margin-top: 32px;
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn-submit-main {
+      flex: 1;
+      padding: 16px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-submit-main:hover { background: var(--primary-hover); }
+
+    table.history-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.9rem;
+    }
+    table.history-table th, table.history-table td {
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      text-align: center;
+    }
+    table.history-table th { background: #f1f5f9; }
+  </style>
+</head>
+<body>
+
+<!-- Mandatory Name Entry Modal -->
+<div id="nameModal">
+  <div class="modal-box">
+    <h2>MATHYATRA Test Portal</h2>
+    <p>CSIR-NET Mathematical Sciences (General Aptitude + Real Analysis Ch-1)<br><strong>5 Part-A (Hindi) + 15 Part-B (MCQ) + 20 Part-C (MSQ) = 150 Marks</strong></p>
+    <input type="text" id="modalNameInput" placeholder="Enter Candidate Name (e.g. VIKRAM CHOUDHARY)" autofocus>
+    <button onclick="startTestWithName()">Start Examination 🚀</button>
+  </div>
+</div>
+
+<div class="navbar">
+  <div class="brand">
+    MATHYATRA - Where Learning Meets Logic
+    <span>CSIR-NET Full Pattern Test (Part A + Real Analysis Ch-01)</span>
+  </div>
+  <div class="nav-controls">
+    <div class="user-badge" id="navUserName">Candidate: -</div>
+    <div class="timer-badge" id="timerDisplay">⏱ 100:00</div>
+    <button class="btn btn-retake" onclick="resetAndShuffle()">🔄 Retake / Shuffle</button>
+    <button class="btn btn-download" onclick="downloadSelf()">⬇ Save HTML File</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Result Display -->
+  <div id="scoreBanner" class="score-banner">
+    <h2 id="bannerTitle">Test Submitted Successfully!</h2>
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-val" id="resScore">0.00</div>
+        <div>Total Score (/ 150.00)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="resCorrect" style="color:var(--correct)">0</div>
+        <div>Correct (Out of 40)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="resWrong" style="color:var(--wrong)">0</div>
+        <div>Incorrect</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="resUnattempted" style="color:var(--muted)">0</div>
+        <div>Unattempted</div>
+      </div>
+    </div>
+    <div style="margin-top: 16px;">
+      <button class="btn btn-retake" style="padding:10px 24px; font-size:1rem;" onclick="resetAndShuffle()">🔄 Start Fresh Attempt</button>
+    </div>
+  </div>
+
+  <!-- Past Attempts Log with Names -->
+  <div class="dashboard-card">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="margin:0; font-size:1.1rem;">📊 Candidate Attempt History (Saved in Browser)</h3>
+      <button onclick="clearHistory()" style="background:none; border:none; color:var(--wrong); cursor:pointer; font-size:0.85rem; text-decoration:underline;">Clear History</button>
+    </div>
+    <div id="historyContainer">
+      <p style="color:var(--muted); font-size:0.9rem; margin:8px 0 0 0;">No attempts recorded yet.</p>
+    </div>
+  </div>
+
+  <!-- Questions Container -->
+  <form id="quizForm">
+    <div class="section-banner part-a">
+      <span>PART A: General Aptitude (सामान्य अभिक्षमता - PYQs) (Q.1 – Q.5)</span>
+      <span>+2.0 Marks for Correct | -0.50 for Incorrect</span>
+    </div>
+    <div id="partAContainer"></div>
+
+    <div class="section-banner">
+      <span>PART B: Single Choice Questions (Q.6 – Q.20)</span>
+      <span>+3.0 Marks for Correct | -0.75 for Incorrect</span>
+    </div>
+    <div id="partBContainer"></div>
+
+    <div class="section-banner">
+      <span>PART C: Multiple Select Questions (Q.21 – Q.40)</span>
+      <span>+4.75 Marks for All Correct | 0 Negative Marking</span>
+    </div>
+    <div id="partCContainer"></div>
+
+    <div class="submit-footer">
+      <button type="button" class="btn-submit-main" id="submitBtn" onclick="evaluateTest()">✔ Submit Final Responses & View Detailed Solutions</button>
+    </div>
+  </form>
+
+</div>
+
+<script>
+  const questionBank = [
+    // ================= PART A: 5 GENERAL APTITUDE PYQs (IN HINDI) =================
+    {
+      id: "qa1", part: "A", type: "radio",
+      text: "10 लीटर (L) दूध में 10% पानी है। पानी का अनुपात बढ़ाकर 20% करने के लिए इसमें कितना पानी और मिलाया जाना चाहिए? [CSIR-NET Dec 2024]",
+      options: [
+        { key: "A", val: "1 L" },
+        { key: "B", val: "1.25 L" },
+        { key: "C", val: "2 L" },
+        { key: "D", val: "2.25 L" }
+      ],
+      ans: ["B"],
+      exp: "<b>सही उत्तर: (B) 1.25 L</b><br><i>हल:</i> 10 लीटर मिश्रण में प्रारंभिक पानी = $10 \\times 10\\% = 1\\text{ L}$ तथा शुद्ध दूध = $9\\text{ L}$ है। मान लीजिए $x$ लीटर पानी मिलाया जाता है। प्रश्नानुसार, $\\dfrac{1 + x}{10 + x} = \\dfrac{20}{100} = \\dfrac{1}{5} \\implies 5 + 5x = 10 + x \\implies 4x = 5 \\implies x = 1.25\\text{ L}$।"
+    },
+    {
+      id: "qa2", part: "A", type: "radio",
+      text: "एक घनाकार (cubic) बॉक्स के अंदर एक गोलाकार गेंद रखी गई है। यदि गेंद का व्यास (diameter) बॉक्स की भुजाओं के बराबर है, तो बॉक्स के आयतन का लगभग कितना प्रतिशत भाग खाली रहेगा? [CSIR-NET Dec 2024]",
+      options: [
+        { key: "A", val: "12%" },
+        { key: "B", val: "24%" },
+        { key: "C", val: "36%" },
+        { key: "D", val: "48%" }
+      ],
+      ans: ["D"],
+      exp: "<b>सही उत्तर: (D) 48%</b><br><i>हल:</i> मान लीजिए घन की भुजा $a$ है, तो गोले की त्रिज्या $r = \\dfrac{a}{2}$ होगी। घन का आयतन $V_{\\text{cube}} = a^3$ और गोले का आयतन $V_{\\text{sphere}} = \\dfrac{4}{3}\\pi \\left(\\dfrac{a}{2}\\right)^3 = \\dfrac{\\pi}{6}a^3 \\approx 0.5236\\,a^3$। अतः खाली आयतन का प्रतिशत = $\\left(1 - 0.5236\\right) \\times 100\\% = 47.64\\% \\approx 48\\%$।"
+    },
+    {
+      id: "qa3", part: "A", type: "radio",
+      text: "एक पानी की बोतल की कुल कीमत 20 रुपये है (जिसमें बोतल की कीमत भी शामिल है)। यदि पानी की कीमत खाली बोतल की कीमत से 15 रुपये अधिक है, तो खाली बोतल की कीमत क्या है? [CSIR-NET Dec 2024]",
+      options: [
+        { key: "A", val: "2.50 रुपये" },
+        { key: "B", val: "5.00 रुपये" },
+        { key: "C", val: "7.50 रुपये" },
+        { key: "D", val: "10.00 रुपये" }
+      ],
+      ans: ["A"],
+      exp: "<b>सही उत्तर: (A) 2.50 रुपये</b><br><i>हल:</i> मान लीजिए खाली बोतल की कीमत $x$ रुपये है। तब पानी की कीमत $(x + 15)$ रुपये होगी। कुल कीमत: $x + (x + 15) = 20 \\implies 2x = 5 \\implies x = 2.50$ रुपये।"
+    },
+    {
+      id: "qa4", part: "A", type: "radio",
+      text: "एक बच्चा हर दिन अपनी गुल्लक (piggy-bank) में उतने ही सिक्के डालता है जितने उसमें पहले से मौजूद हैं। यदि वह एक सिक्के से शुरुआत करता है, तो गुल्लक 8 दिनों में भर जाती है। यदि वह दो सिक्कों से शुरुआत करे, तो गुल्लक को भरने में कितने दिन लगेंगे? [CSIR-NET Dec 2023]",
+      options: [
+        { key: "A", val: "4 दिन" },
+        { key: "B", val: "5 दिन" },
+        { key: "C", val: "6 दिन" },
+        { key: "D", val: "7 दिन" }
+      ],
+      ans: ["D"],
+      exp: "<b>सही उत्तर: (D) 7 दिन</b><br><i>हल:</i> हर दिन सिक्कों की संख्या दोगुनी हो जाती है। 1 सिक्के से शुरू करने पर पहले दिन के बाद 2 सिक्के हो जाते हैं और कुल 8 दिन लगते हैं। यदि सीधे 2 सिक्कों से शुरू किया जाए, तो पहले दिन की प्रक्रिया बच जाएगी और गुल्लक $8 - 1 = 7$ दिनों में भर जाएगी।"
+    },
+    {
+      id: "qa5", part: "A", type: "radio",
+      text: "कोई धनराशि साधारण ब्याज (Simple Interest) की एक निश्चित दर पर 5 वर्षों में स्वयं की दोगुनी हो जाती है। समान साधारण ब्याज दर पर यह धनराशि कितने वर्षों में स्वयं की 16 गुनी हो जाएगी? [CSIR-NET July 2026]",
+      options: [
+        { key: "A", val: "80 वर्ष" },
+        { key: "B", val: "70 वर्ष" },
+        { key: "C", val: "75 वर्ष" },
+        { key: "D", val: "90 वर्ष" }
+      ],
+      ans: ["C"],
+      exp: "<b>सही उत्तर: (C) 75 वर्ष</b><br><i>हल:</i> साधारण ब्याज में मूलधन $P$ से $2P$ होने में ब्याज $= P$ (समय = 5 वर्ष)। राशि को $16P$ होने के लिए आवश्यक कुल साधारण ब्याज $= 16P - P = 15P$ होगा। चूँकि ब्याज $= P$ कमाने में 5 वर्ष लगते हैं, इसलिए $15P$ ब्याज कमाने में $15 \\times 5 = 75$ वर्ष लगेंगे।"
+    },
+
+    // ================= PART B: 15 SINGLE-CHOICE QUESTIONS (CSIR-NET LEVEL) =================
+    {
+      id: "q1", part: "B", type: "radio",
+      text: "Let $X = \\{2021, 2022, 2023, 2024\\}$. Let $\\mathcal{E}$ denote the collection of all distinct equivalence relations on $X$, and let $\\mathcal{R}$ denote the collection of all binary relations on $X$. Then the ordered pair $(|\\mathcal{E}|, |\\mathcal{R}|)$ is equal to:",
+      options: [
+        { key: "A", val: "$(15, 2^{16})$" },
+        { key: "B", val: "$(14, 2^{16})$" },
+        { key: "C", val: "$(15, 2^8)$" },
+        { key: "D", val: "$(24, 4^4)$" }
+      ],
+      ans: ["A"],
+      exp: "<b>Correct Answer: (A)</b><br>By the Fundamental Theorem of Equivalence Relations, $|\\mathcal{E}|$ equals the number of partitions of a 4-element set, given by the 4th Bell number $B_4 = \\sum_{k=0}^3 \\binom{3}{k} B_k = 1 + 3(1) + 3(2) + 5 = 15$. Furthermore, a binary relation on $X$ is any subset of $X \\times X$, so $|\\mathcal{R}| = 2^{|X \\times X|} = 2^{16}$."
+    },
+    {
+      id: "q2", part: "B", type: "radio",
+      text: "Let $\\mathbb{Z}_{\\ge 0} = \\{0, 1, 2, \\dots\\}$. Consider the mapping $f: \\mathbb{Z}_{\\ge 0} \\times \\mathbb{Z} \\to \\mathbb{Z}$ defined by $f(m, n) = 2^m(2n + 1)$. Which one of the following statements is true?",
+      options: [
+        { key: "A", val: "$f$ is surjective, but not injective." },
+        { key: "B", val: "$f$ is injective, and the range of $f$ is $\\mathbb{Z} \\setminus \\{0\\}$." },
+        { key: "C", val: "$f$ is a bijection from $\\mathbb{Z}_{\\ge 0} \\times \\mathbb{Z}$ onto $\\mathbb{Z}$." },
+        { key: "D", val: "$f$ is neither injective nor surjective." }
+      ],
+      ans: ["B"],
+      exp: "<b>Correct Answer: (B)</b><br>If $2^{m_1}(2n_1+1) = 2^{m_2}(2n_2+1)$, then since $2n_1+1$ and $2n_2+1$ are odd integers, uniqueness of prime factorization implies $m_1 = m_2$ and $n_1 = n_2$, so $f$ is injective. Moreover, every non-zero integer $k \\in \\mathbb{Z} \\setminus \\{0\\}$ can be uniquely factored as $2^m(2n+1)$ with $m \\ge 0$ and $n \\in \\mathbb{Z}$, while $0$ has no pre-image. Thus, $\\text{Range}(f) = \\mathbb{Z} \\setminus \\{0\\}$."
+    },
+    {
+      id: "q3", part: "B", type: "radio",
+      text: "Let $(X, <_X)$ and $(Y, <_Y)$ be two ordered sets. We say that $X$ and $Y$ are order-isomorphic (denoted $X \\simeq Y$) if there exists a bijection $f: X \\to Y$ such that $x_1 <_X x_2 \\implies f(x_1) <_Y f(x_2)$. Which one of the following ordered sets (with the usual order) is order-isomorphic to $X = [0, 1)$?",
+      options: [
+        { key: "A", val: "$(0, 1]$" },
+        { key: "B", val: "$(-1, 1)$" },
+        { key: "C", val: "$\\{0\\} \\cup (2, 3)$" },
+        { key: "D", val: "$[0, 1]$" }
+      ],
+      ans: ["C"],
+      exp: "<b>Correct Answer: (C)</b><br>Write $X = [0, 1) = \\{0\\} \\cup (0, 1)$ and $Y = \\{0\\} \\cup (2, 3)$. The function $f: X \\to Y$ defined by $f(0) = 0$ and $f(x) = x + 2$ for $x \\in (0, 1)$ is a strictly increasing bijection. Hence $[0, 1) \\simeq \\{0\\} \\cup (2, 3)$. Note that $(0, 1]$ has a largest element while $[0, 1)$ does not."
+    },
+    {
+      id: "q4", part: "B", type: "radio",
+      text: "Consider the Cartesian product $X = \\mathbb{N} \\times [0, 1)$ equipped with the dictionary (lexicographical) order relation $<$. Which of the following subsets of $\\mathbb{R}$ (with the usual order) is order-isomorphic to $(X, <)$?",
+      options: [
+        { key: "A", val: "$(0, \\infty)$" },
+        { key: "B", val: "$[1, \\infty)$" },
+        { key: "C", val: "$\\mathbb{R}$" },
+        { key: "D", val: "$(0, 1)$" }
+      ],
+      ans: ["B"],
+      exp: "<b>Correct Answer: (B)</b><br>Define $f: \\mathbb{N} \\times [0, 1) \\to [1, \\infty)$ by $f(n, t) = n + t$. Since $[1, \\infty) = \\bigcup_{n=1}^{\\infty} [n, n+1)$ is a disjoint union, $f$ is bijective. Moreover, $(n_1, t_1) < (n_2, t_2)$ in the dictionary order if and only if $n_1 + t_1 < n_2 + t_2$ in $\\mathbb{R}$. Also note that $[1, \\infty) \\simeq [a, b)$ for any $a < b$."
+    },
+    {
+      id: "q5", part: "B", type: "radio",
+      text: "Consider the subset $E = \\left\\{ \\dfrac{m}{n} + \\dfrac{4n}{m} : m, n \\in \\mathbb{N} \\right\\}$ of $\\mathbb{R}$. Which one of the following statements is true?",
+      options: [
+        { key: "A", val: "$\\inf(E) = 2$ and $\\sup(E) = +\\infty$" },
+        { key: "B", val: "$\\inf(E) = 4$ and $4 \\in E$" },
+        { key: "C", val: "$\\inf(E) = 4$ and $4 \\notin E$" },
+        { key: "D", val: "$\\inf(E) = 0$ and $\\sup(E) = 4$" }
+      ],
+      ans: ["B"],
+      exp: "<b>Correct Answer: (B)</b><br>By the AM-GM inequality, for any $m, n \\in \\mathbb{N}$, $\\dfrac{m}{n} + \\dfrac{4n}{m} \\ge 2\\sqrt{\\dfrac{m}{n} \\cdot \\dfrac{4n}{m}} = 4$. Equality holds if and only if $\\dfrac{m}{n} = \\dfrac{4n}{m} \\iff m = 2n$. Taking $n=1, m=2 \\in \\mathbb{N}$, we see that $4 \\in E$, so $\\inf(E) = 4$."
+    },
+    {
+      id: "q6", part: "B", type: "radio",
+      text: "Let $E = \\left\\{ \\dfrac{mn}{4m^2 + n^2} : m \\in \\mathbb{Z}, n \\in \\mathbb{N} \\right\\}$. Then the values of $\\inf(E)$ and $\\sup(E)$ are, respectively:",
+      options: [
+        { key: "A", val: "$-\\dfrac{1}{4}$ and $\\dfrac{1}{4}$" },
+        { key: "B", val: "$0$ and $\\dfrac{1}{4}$" },
+        { key: "C", val: "$-\\dfrac{1}{2}$ and $\\dfrac{1}{2}$" },
+        { key: "D", val: "$-\\dfrac{1}{5}$ and $\\dfrac{1}{5}$" }
+      ],
+      ans: ["A"],
+      exp: "<b>Correct Answer: (A)</b><br>Since $(2m \\pm n)^2 \\ge 0$ for all $m \\in \\mathbb{Z}, n \\in \\mathbb{N}$, we have $4m^2 + n^2 \\ge \\pm 4mn$, which implies $-\\dfrac{1}{4} \\le \\dfrac{mn}{4m^2+n^2} \\le \\dfrac{1}{4}$. For $m = 1, n = 2$, the value is $1/4 \\in E$; for $m = -1, n = 2$, the value is $-1/4 \\in E$. Thus $\\inf(E) = -1/4$ and $\\sup(E) = 1/4$."
+    },
+    {
+      id: "q7", part: "B", type: "radio",
+      text: "For a real number $x$, let $[x]$ denote the greatest integer less than or equal to $x$. Consider the set $E = \\left\\{ \\sqrt{n} - [\\sqrt{n}] : n \\in \\mathbb{N} \\right\\}$. Then:",
+      options: [
+        { key: "A", val: "$\\inf(E) = 0 \\in E$ and $\\sup(E) = 1 \\notin E$" },
+        { key: "B", val: "$\\inf(E) = 0 \\in E$ and $\\sup(E) = 1 \\in E$" },
+        { key: "C", val: "$\\inf(E) = 0 \\notin E$ and $\\sup(E) = 1 \\notin E$" },
+        { key: "D", val: "$\\inf(E) = 0 \\in E$ and $\\sup(E) = \\sqrt{2} - 1$" }
+      ],
+      ans: ["A"],
+      exp: "<b>Correct Answer: (A)</b><br>For $n = m^2$ ($m \\in \\mathbb{N}$), $\\sqrt{n} - [\\sqrt{n}] = m - m = 0 \\in E$, so $\\inf(E) = 0 \\in E$. On the other hand, $x - [x] < 1$ for all $x \\in \\mathbb{R}$, so $1 \\notin E$. Choosing $n = m^2 + 2m$, we have $[\\sqrt{m^2+2m}] = m$, and $\\sqrt{m^2+2m} - m = \\dfrac{2m}{\\sqrt{m^2+2m}+m} \\to 1$ as $m \\to \\infty$. Hence $\\sup(E) = 1 \\notin E$."
+    },
+    {
+      id: "q8", part: "B", type: "radio",
+      text: "Fix a positive integer $n \\in \\mathbb{N}$, and define $E_n = \\left\\{ \\dfrac{x^n}{1 + x + x^2 + \\cdots + x^{2n}} : x \\in (0, \\infty) \\right\\}$. Which one of the following statements is true?",
+      options: [
+        { key: "A", val: "$\\inf(E_n) = 0$ and $\\sup(E_n) = \\dfrac{1}{2n}$" },
+        { key: "B", val: "$\\inf(E_n) = 0$ and $\\sup(E_n) = \\dfrac{1}{2n+1}$" },
+        { key: "C", val: "$\\inf(E_n) = \\dfrac{1}{2n+1}$ and $\\sup(E_n) = 1$" },
+        { key: "D", val: "$\\inf(E_n) = 0$ and $\\sup(E_n) = +\\infty$" }
+      ],
+      ans: ["B"],
+      exp: "<b>Correct Answer: (B)</b><br>Applying the AM-GM inequality to the $2n+1$ positive terms $1, x, x^2, \\dots, x^{2n}$ yields $\\dfrac{1+x+\\dots+x^{2n}}{2n+1} \\ge \\left(1 \\cdot x \\cdot x^2 \\cdots x^{2n}\\right)^{\\frac{1}{2n+1}} = \\left(x^{n(2n+1)}\\right)^{\\frac{1}{2n+1}} = x^n$. Thus $\\dfrac{x^n}{1+x+\\dots+x^{2n}} \\le \\dfrac{1}{2n+1}$, with equality at $x=1$. Also, as $x \\to 0^+$, the expression tends to $0$, so $\\inf(E_n) = 0$."
+    },
+    {
+      id: "q9", part: "B", type: "radio",
+      text: "Let $X$ be a non-empty finite set and let $B$ be a non-empty proper subset of $\\mathbb{R}$. Define $Y = \\left\\{ f^{-1}(B) : f \\text{ is a function from } X \\text{ to } \\mathbb{R} \\right\\}$. Which one of the following statements is true?",
+      options: [
+        { key: "A", val: "$Y$ is an infinite set." },
+        { key: "B", val: "$Y$ has exactly $2^{|X|}$ elements." },
+        { key: "C", val: "There exists a bijective function from $X$ onto $Y$." },
+        { key: "D", val: "There exists a surjective function from $X$ onto $Y$." }
+      ],
+      ans: ["B"],
+      exp: "<b>Correct Answer: (B)</b><br>Since $B$ is a non-empty proper subset of $\\mathbb{R}$, we can pick $b \\in B$ and $c \\in \\mathbb{R} \\setminus B$. For any subset $A \\subseteq X$, define $f_A: X \\to \\mathbb{R}$ by $f_A(x) = b$ if $x \\in A$, and $f_A(x) = c$ if $x \\in X \\setminus A$. Then $f_A^{-1}(B) = A$. Hence $Y = \\mathcal{P}(X)$, which has $2^{|X|}$ elements."
+    },
+    {
+      id: "q10", part: "B", type: "radio",
+      text: "Let $A = (-6, 1)$ and $B = (-3, 2)$ be open intervals in $\\mathbb{R}$. Define the product set $AB = \\{ab : a \\in A, b \\in B\\}$ and difference set $A - B = \\{a - b : a \\in A, b \\in B\\}$. Then $(\\sup(AB), \\inf(A - B))$ is equal to:",
+      options: [
+        { key: "A", val: "$(18, -8)$" },
+        { key: "B", val: "$(2, -3)$" },
+        { key: "C", val: "$(18, -4)$" },
+        { key: "D", val: "$(12, -8)$" }
+      ],
+      ans: ["A"],
+      exp: "<b>Correct Answer: (A)</b><br>For bounded sets $A, B \\subset \\mathbb{R}$, $\\sup(AB) = \\max\\{\\sup A \\sup B, \\sup A \\inf B, \\inf A \\sup B, \\inf A \\inf B\\} = \\max\\{1(2), 1(-3), (-6)(2), (-6)(-3)\\} = 18$. Also, $\\inf(A - B) = \\inf(A) - \\sup(B) = -6 - 2 = -8$."
+    },
+    {
+      id: "q11", part: "B", type: "radio",
+      text: "Let $x, y \\in [0, 1]$ be such that $x \\ne y$. Which of the following statements is true for every $\\epsilon > 0$?",
+      options: [
+        { key: "A", val: "There exists a positive integer $N$ such that $|x - y| < 2^n \\epsilon$ for every integer $n \\ge N$." },
+        { key: "B", val: "There exists a positive integer $N$ such that $2^n \\epsilon < |x - y|$ for every integer $n \\ge N$." },
+        { key: "C", val: "There exists a positive integer $N$ such that $|x - y| < 2^{-n} \\epsilon$ for every integer $n \\ge N$." },
+        { key: "D", val: "For every positive integer $N$, $|x - y| < 2^{-n} \\epsilon$ for some integer $n \\ge N$." }
+      ],
+      ans: ["A"],
+      exp: "<b>Correct Answer: (A)</b><br>Since $x \\ne y$, $|x - y| > 0$. Given any $\\epsilon > 0$, by the Archimedean property of $\\mathbb{R}$, there exists $N \\in \\mathbb{N}$ such that $N\\epsilon > |x - y|$. Since $2^n > n \\ge N$ for all $n \\ge N$, we have $|x - y| < N\\epsilon < 2^n \\epsilon$ for all $n \\ge N$."
+    },
+    {
+      id: "q12", part: "B", type: "radio",
+      text: "If $x, y, z$ are positive real numbers satisfying $(1 + x + y + z)\\left(1 + \\dfrac{1}{x} + \\dfrac{1}{y} + \\dfrac{1}{z}\\right) = 16$, then the value of $x^3 + y^3 + z^3$ is:",
+      options: [
+        { key: "A", val: "3" },
+        { key: "B", val: "9" },
+        { key: "C", val: "27" },
+        { key: "D", val: "1" }
+      ],
+      ans: ["A"],
+      exp: "<b>Correct Answer: (A)</b><br>By Cauchy-Schwarz (or AM-HM) inequality applied to $(1, x, y, z)$, we have $(1+x+y+z)(1+1/x+1/y+1/z) \\ge (1+1+1+1)^2 = 16$, where equality holds if and only if $x = y = z = 1$. Therefore, $x^3 + y^3 + z^3 = 1^3 + 1^3 + 1^3 = 3$."
+    },
+    {
+      id: "q13", part: "B", type: "radio",
+      text: "Which one of the following sets is COUNTABLE?",
+      options: [
+        { key: "A", val: "The set of all functions from $\\mathbb{Q}$ to $\\mathbb{Q}$." },
+        { key: "B", val: "The set of all functions from $\\mathbb{Q}$ to $\\{0, 1\\}$." },
+        { key: "C", val: "The set of all functions from $\\mathbb{Q}$ to $\\{0, 1\\}$ which vanish outside a finite set." },
+        { key: "D", val: "The set of all subsets of $\\mathbb{N}$." }
+      ],
+      ans: ["C"],
+      exp: "<b>Correct Answer: (C)</b><br>Each function $f: \\mathbb{Q} \\to \\{0, 1\\}$ that vanishes outside a finite set is uniquely determined by the finite subset $A = f^{-1}(\\{1\\}) \\subset \\mathbb{Q}$. Since $\\mathbb{Q}$ is countably infinite, the collection of all its finite subsets is countably infinite."
+    },
+    {
+      id: "q14", part: "B", type: "radio",
+      text: "Let $E = \\left\\{ \\dfrac{mn}{1 + m + n} : m, n \\in \\mathbb{N} \\right\\}$. Then $(\\inf(E), \\sup(E))$ in the extended real number system $\\overline{\\mathbb{R}}$ is:",
+      options: [
+        { key: "A", val: "$\\left(0, +\\infty\\right)$" },
+        { key: "B", val: "$\\left(\\dfrac{1}{3}, +\\infty\\right)$" },
+        { key: "C", val: "$\\left(\\dfrac{1}{2}, 1\\right)$" },
+        { key: "D", val: "$\\left(\\dfrac{1}{3}, 1\\right)$" }
+      ],
+      ans: ["B"],
+      exp: "<b>Correct Answer: (B)</b><br>For all $m, n \\in \\mathbb{N}$, $1 \\le mn$, $m \\le mn$, and $n \\le mn$. Adding these gives $1 + m + n \\le 3mn \\implies \\dfrac{mn}{1+m+n} \\ge \\dfrac{1}{3}$, with equality at $m = n = 1$. Setting $m = n$, $\\dfrac{n^2}{1+2n} \\to +\\infty$ as $n \\to \\infty$. Thus $(\\inf E, \\sup E) = (1/3, +\\infty)$."
+    },
+    {
+      id: "q15", part: "B", type: "radio",
+      text: "Consider the following subset of $\\mathbb{R}$: $U = \\left\\{ x \\in \\mathbb{R} : x^2 - 9x + 18 \\le 0 \\text{ and } x^2 - 7x + 12 \\le 0 \\right\\}$. Which one of the following statements is true?",
+      options: [
+        { key: "A", val: "$\\inf(U) = 3$ and $\\sup(U) = 6$" },
+        { key: "B", val: "$\\inf(U) = 3$ and $\\sup(U) = 4$" },
+        { key: "C", val: "$\\inf(U) = 4$ and $\\sup(U) = 6$" },
+        { key: "D", val: "$\\inf(U) = 2$ and $\\sup(U) = 4$" }
+      ],
+      ans: ["B"],
+      exp: "<b>Correct Answer: (B)</b><br>We have $x^2 - 9x + 18 = (x-3)(x-6) \\le 0 \\iff x \\in [3, 6]$, and $x^2 - 7x + 12 = (x-3)(x-4) \\le 0 \\iff x \\in [3, 4]$. Therefore, $U = [3, 6] \\cap [3, 4] = [3, 4]$, which yields $\\inf(U) = 3$ and $\\sup(U) = 4$."
+    },
+
+    // ================= PART C: 20 MULTIPLE-SELECT QUESTIONS (CSIR-NET LEVEL) =================
+    {
+      id: "q16", part: "C", type: "checkbox",
+      text: "Let $A, B, C, D$ be arbitrary sets. Which of the following set-theoretic identities are ALWAYS true?",
+      options: [
+        { key: "A", val: "$A \\setminus (B \\setminus A) = A$" },
+        { key: "B", val: "$A \\cap (B \\setminus C) = (A \\cap B) \\setminus (A \\cap C)$" },
+        { key: "C", val: "$(A \\times B) \\cap (C \\times D) = (A \\cap C) \\times (B \\cap D)$" },
+        { key: "D", val: "$(A \\times B) \\cup (C \\times D) = (A \\cup C) \\times (B \\cup D)$" }
+      ],
+      ans: ["A", "B", "C"],
+      exp: "<b>Correct Answer: (A, B, C)</b><br>Since $B \\setminus A$ contains no elements of $A$, removing it from $A$ leaves $A$ unchanged, so (A) holds. (B) and (C) are standard distributive/product laws (Page 3 of notes). (D) is false in general: take $A=\\{1\\}, B=\\{1\\}, C=\\{2\\}, D=\\{2\\}$; then $(1,2) \\in (A\\cup C)\\times(B\\cup D)$ but $(1,2) \\notin (A\\times B)\\cup(C\\times D)$."
+    },
+    {
+      id: "q17", part: "C", type: "checkbox",
+      text: "Let $f: X \\to Y$ be a function between non-empty sets. Which of the following statements are necessarily true?",
+      options: [
+        { key: "A", val: "For every subset $A \\subseteq X$, $A \\subseteq f^{-1}(f(A))$, and equality holds for all $A \\subseteq X$ if and only if $f$ is injective." },
+        { key: "B", val: "For every subset $B \\subseteq Y$, $f(f^{-1}(B)) \\subseteq B$, and equality holds for all $B \\subseteq Y$ if and only if $f$ is surjective." },
+        { key: "C", val: "For all subsets $A_1, A_2 \\subseteq X$, $f(A_1 \\setminus A_2) = f(A_1) \\setminus f(A_2)$ if and only if $f$ is injective." },
+        { key: "D", val: "For all subsets $B_1, B_2 \\subseteq Y$, $f^{-1}(B_1 \\setminus B_2) = f^{-1}(B_1) \\setminus f^{-1}(B_2)$ holds even if $f$ is neither injective nor surjective." }
+      ],
+      ans: ["A", "B", "C", "D"],
+      exp: "<b>Correct Answer: (A, B, C, D)</b><br>All four statements are fundamental characterizations of direct and inverse images under mappings (proved on Pages 5–7 of the notes). Inverse image $f^{-1}$ preserves all set operations (unions, intersections, set differences, complements) unconditionally."
+    },
+    {
+      id: "q18", part: "C", type: "checkbox",
+      text: "Let $X$ and $Y$ be non-empty sets and let $f: X \\to Y$ be a function. Recall that $g: Y \\to X$ is a left inverse of $f$ if $g \\circ f = I_X$, and $h: Y \\to X$ is a right inverse of $f$ if $f \\circ h = I_Y$. Which of the following assertions are true?",
+      options: [
+        { key: "A", val: "$f$ admits a left inverse if and only if $f$ is injective." },
+        { key: "B", val: "$f$ admits more than one left inverse if and only if $f$ is injective but not surjective (assuming $|X| \\ge 2$)." },
+        { key: "C", val: "$f$ admits more than one right inverse if and only if $f$ is surjective but not injective." },
+        { key: "D", val: "If $f$ admits a unique left inverse, then $f$ is necessarily a bijection." }
+      ],
+      ans: ["A", "B", "C", "D"],
+      exp: "<b>Correct Answer: (A, B, C, D)</b><br>As proved on Pages 9–11 of the notes: left invertibility $\\iff$ injectivity; right invertibility $\\iff$ surjectivity. Non-uniqueness of left inverse occurs precisely when $Y \\setminus f(X) \\ne \\emptyset$ ($f$ not onto), and non-uniqueness of right inverse occurs when some fiber $f^{-1}(\\{y\\})$ has at least two elements ($f$ not 1-1)."
+    },
+    {
+      id: "q19", part: "C", type: "checkbox",
+      text: "Let $f: X \\to Y$ and $g: Y \\to Z$ be two functions, and consider their composition $g \\circ f: X \\to Z$. Which of the following statements are necessarily true?",
+      options: [
+        { key: "A", val: "If $g \\circ f$ is injective, then $f$ must be injective, but $g$ need not be injective." },
+        { key: "B", val: "If $g \\circ f$ is surjective, then $g$ must be surjective, but $f$ need not be surjective." },
+        { key: "C", val: "If $g \\circ f$ is bijective, then $f$ is injective and $g$ is surjective." },
+        { key: "D", val: "For every subset $C \\subseteq Z$, $(g \\circ f)^{-1}(C) = f^{-1}(g^{-1}(C))$." }
+      ],
+      ans: ["A", "B", "C", "D"],
+      exp: "<b>Correct Answer: (A, B, C, D)</b><br>All four properties of composite mappings are established on Pages 9 and 11 of the notes."
+    },
+    {
+      id: "q20", part: "C", type: "checkbox",
+      text: "Which of the following pairs of ordered sets (equipped with the standard order $\\le$) are order-isomorphic ($\\simeq$)?",
+      options: [
+        { key: "A", val: "$(\\mathbb{N}, \\le)$ and $(\\mathbb{Z}, \\le)$" },
+        { key: "B", val: "$(\\mathbb{Z}, \\le)$ and $(\\mathbb{Q}, \\le)$" },
+        { key: "C", val: "$(a, b)$ and $(c, \\infty)$, where $a, b, c \\in \\mathbb{R}$ with $a < b$" },
+        { key: "D", val: "$[a, b)$ and $[c, \\infty)$, where $a, b, c \\in \\mathbb{R}$ with $a < b$" }
+      ],
+      ans: ["C", "D"],
+      exp: "<b>Correct Answer: (C, D)</b><br>(A) is false because $\\mathbb{N}$ has a smallest element while $\\mathbb{Z}$ does not. (B) is false because between any two rationals there is another rational (dense order), whereas $\\mathbb{Z}$ has immediate successors $(m, m+1) = \\emptyset$ (Pages 18–19). (C) and (D) are true via standard rational/homeomorphic order-preserving bijections (Pages 19, 22)."
+    },
+    {
+      id: "q21", part: "C", type: "checkbox",
+      text: "Recall that a totally ordered set $(X, \\le)$ is called well-ordered if every non-empty subset of $X$ has a smallest element. Which of the following ordered sets are well-ordered?",
+      options: [
+        { key: "A", val: "Every subset of $(\\mathbb{N}, \\le)$ with the induced order." },
+        { key: "B", val: "$\\mathbb{N} \\times \\mathbb{N}$ equipped with the dictionary order relation." },
+        { key: "C", val: "$\\{1, 2\\} \\times \\mathbb{N} \\times \\{1, 2, \\dots, 10\\} \\times \\mathbb{N}$ equipped with the dictionary order relation." },
+        { key: "D", val: "$([0, 1], \\le)$ with the usual order." }
+      ],
+      ans: ["A", "B", "C"],
+      exp: "<b>Correct Answer: (A, B, C)</b><br>Every subset of a well-ordered set is well-ordered, and any finite Cartesian product of well-ordered sets is well-ordered under the dictionary order (Pages 23–24). $[0, 1]$ is not well-ordered because its subset $(0, 1)$ has no smallest element."
+    },
+    {
+      id: "q22", part: "C", type: "checkbox",
+      text: "Let $(X, \\le)$ be an ordered set. Which of the following statements concerning the least upper bound (l.u.b.) property and greatest lower bound (g.l.b.) property are true?",
+      options: [
+        { key: "A", val: "$X$ has the l.u.b. property if and only if $X$ has the g.l.b. property." },
+        { key: "B", val: "The ordered set $(\\mathbb{Q}, \\le)$ fails to have both the l.u.b. property and the g.l.b. property." },
+        { key: "C", val: "In $X = \\mathbb{Q}^+ = \\{q \\in \\mathbb{Q} : q > 0\\}$, the subset $A = \\{x \\in \\mathbb{Q}^+ : x^2 < 2\\}$ is bounded above in $X$, but $\\sup(A)$ does not exist in $X$." },
+        { key: "D", val: "Any ordered field $F$ that possesses the l.u.b. property is order-isomorphic to $\\mathbb{R}$." }
+      ],
+      ans: ["A", "B", "C", "D"],
+      exp: "<b>Correct Answer: (A, B, C, D)</b><br>All four theorems are proved in detail on Pages 27–31 of the notes."
+    },
+    {
+      id: "q23", part: "C", type: "checkbox",
+      text: "Which of the following statements regarding ordered fields are necessarily true?",
+      options: [
+        { key: "A", val: "There exists an order relation $\\le$ on the complex field $\\mathbb{C}$ such that $(\\mathbb{C}, +, \\cdot, \\le)$ becomes an ordered field." },
+        { key: "B", val: "No finite field $\\mathbb{F}_q$ can be endowed with an order relation to make it an ordered field." },
+        { key: "C", val: "In any ordered field $F$, $x^2 > 0$ for every $x \\in F \\setminus \\{0\\}$, and $0 < x < y \\implies 0 < y^{-1} < x^{-1}$." },
+        { key: "D", val: "The field of rational numbers $(\\mathbb{Q}, +, \\cdot, \\le)$ is an ordered field." }
+      ],
+      ans: ["B", "C", "D"],
+      exp: "<b>Correct Answer: (B, C, D)</b><br>In any ordered field, $x \\ne 0 \\implies x^2 > 0$ and $1 = 1^2 > 0$. In $\\mathbb{C}$, $i^2 = -1 < 0$, so $\\mathbb{C}$ cannot be an ordered field (Page 33). In a finite field of characteristic $p$, $0 < 1 \\implies 0 < 1 + 1 + \\dots + 1 (p\\text{ times}) = 0$, a contradiction (Page 34)."
+    },
+    {
+      id: "q24", part: "C", type: "checkbox",
+      text: "Let $A$ and $B$ be non-empty bounded subsets of $\\mathbb{R}$. Which of the following equalities are ALWAYS true?",
+      options: [
+        { key: "A", val: "$\\sup(A + B) = \\sup(A) + \\sup(B)$ and $\\inf(A + B) = \\inf(A) + \\inf(B)$" },
+        { key: "B", val: "$\\sup(A - B) = \\sup(A) - \\inf(B)$ and $\\inf(A - B) = \\inf(A) - \\sup(B)$" },
+        { key: "C", val: "$\\sup(A \\cup B) = \\max\\{\\sup(A), \\sup(B)\\}$ and $\\inf(A \\cup B) = \\min\\{\\inf(A), \\inf(B)\\}$" },
+        { key: "D", val: "If $A \\subseteq (0, \\infty)$ and $\\inf(A) > 0$, then $\\sup\\left(\\dfrac{1}{A}\\right) = \\dfrac{1}{\\inf(A)}$ where $\\dfrac{1}{A} = \\left\\{\\dfrac{1}{a} : a \\in A\\right\\}$." }
+      ],
+      ans: ["A", "B", "C", "D"],
+      exp: "<b>Correct Answer: (A, B, C, D)</b><br>All four identities are proved on Pages 34–35 of the notes."
+    },
+    {
+      id: "q25", part: "C", type: "checkbox",
+      text: "Which of the following inequalities hold for every integer $n > 1$?",
+      options: [
+        { key: "A", val: "$\\dfrac{1}{n} + \\dfrac{1}{n+1} + \\dfrac{1}{n+2} + \\cdots + \\dfrac{1}{2n} > \\dfrac{2}{3}\\left(1 + \\dfrac{1}{n}\\right)$" },
+        { key: "B", val: "$1 + \\dfrac{1}{2} + \\dfrac{1}{3} + \\cdots + \\dfrac{1}{n} > n\\left((n+1)^{1/n} - 1\\right)$" },
+        { key: "C", val: "$1 + \\dfrac{1}{2} + \\dfrac{1}{3} + \\cdots + \\dfrac{1}{n} < n\\left(1 + \\dfrac{1}{n+1} - \\dfrac{1}{(n+1)^{1/n}}\\right)$" },
+        { key: "D", val: "$\\dfrac{1}{n} + \\dfrac{1}{n+1} + \\cdots + \\dfrac{1}{2n} < \\dfrac{2}{3}$" }
+      ],
+      ans: ["A", "B", "C"],
+      exp: "<b>Correct Answer: (A, B, C)</b><br>Using strict AM > GM > HM on distinct positive numbers (Pages 40–41 of notes): applying AM > HM to $n, n+1, \\dots, 2n$ yields $\\sum_{k=0}^n \\frac{1}{n+k} > \\frac{2}{3}(1 + \\frac{1}{n}) > \\frac{2}{3}$, so (A) is true and (D) is false. Applying AM > GM to $\\frac{k+1}{k}$ and $\\frac{k}{k+1}$ gives (B) and (C)."
+    },
+    {
+      id: "q26", part: "C", type: "checkbox",
+      text: "Let $a_1, a_2, \\dots, a_n$ be positive real numbers and let $s = \\sum_{k=1}^n a_k$. Which of the following inequalities are always true?",
+      options: [
+        { key: "A", val: "$\\left(\\sum_{k=1}^n a_k\\right)\\left(\\sum_{k=1}^n \\dfrac{1}{a_k}\\right) \\ge n^2$" },
+        { key: "B", val: "If $n > 1$, then $\\sum_{k=1}^n \\dfrac{s}{s - a_k} \\ge \\dfrac{n^2}{n - 1}$" },
+        { key: "C", val: "If $a = a_1 a_2 \\cdots a_n \\ne 1$, then $\\sum_{k=1}^n \\left(\\log_a(a_k)\\right)^2 \\ge \\dfrac{1}{n}$" },
+        { key: "D", val: "If $a_1 a_2 \\cdots a_n = 1$, then $(1 + a_1)(1 + a_2)\\cdots(1 + a_n) \\ge 2^n$" }
+      ],
+      ans: ["A", "B", "C", "D"],
+      exp: "<b>Correct Answer: (A, B, C, D)</b><br>(A) is direct AM-HM. For (B), apply AM-HM to $s-a_k$: $\\sum (s-a_k) \\sum \\frac{1}{s-a_k} = (n-1)s \\sum \\frac{1}{s-a_k} \\ge n^2$ (Page 42). For (C), $\\sum_{k=1}^n \\log_a(a_k) = \\log_a(a) = 1$, and by Cauchy-Schwarz $1 = (\\sum 1 \\cdot \\log_a a_k)^2 \\le n \\sum (\\log_a a_k)^2$ (Page 45). (D) follows from $\\frac{1+a_k}{2} \\ge \\sqrt{a_k}$ (Page 43)."
+    },
+    {
+      id: "q27", part: "C", type: "checkbox",
+      text: "Let $a, b, c$ be positive real numbers, and let $0 < \\alpha_1 < \\alpha_2 < \\cdots < \\alpha_n < \\dfrac{\\pi}{2}$. Which of the following inequalities are necessarily true?",
+      options: [
+        { key: "A", val: "$\\dfrac{ab}{c} + \\dfrac{bc}{a} + \\dfrac{ca}{b} \\ge a + b + c$" },
+        { key: "B", val: "$\\dfrac{2}{a+b} + \\dfrac{2}{b+c} + \\dfrac{2}{c+a} \\ge \\dfrac{9}{a+b+c}$" },
+        { key: "C", val: "$\\tan(\\alpha_1) < \\dfrac{\\sin \\alpha_1 + \\sin \\alpha_2 + \\cdots + \\sin \\alpha_n}{\\cos \\alpha_1 + \\cos \\alpha_2 + \\cdots + \\cos \\alpha_n} < \\tan(\\alpha_n)$" },
+        { key: "D", val: "$\\cot(\\alpha_n) < \\dfrac{\\cos \\alpha_1 + \\cos \\alpha_2 + \\cdots + \\cos \\alpha_n}{\\sin \\alpha_1 + \\sin \\alpha_2 + \\cdots + \\sin \\alpha_n} < \\cot(\\alpha_1)$" }
+      ],
+      ans: ["A", "B", "C", "D"],
+      exp: "<b>Correct Answer: (A, B, C, D)</b><br>(A) follows from $\\frac{1}{2}(\\frac{ab}{c} + \\frac{bc}{a}) \\ge b$, etc. (B) follows from AM-HM on $(a+b), (b+c), (c+a)$ whose sum is $2(a+b+c)$. (C) and (D) follow from the ratio bound $\\min_k \\frac{a_k}{b_k} \\le \\frac{\\sum a_k}{\\sum b_k} \\le \\max_k \\frac{a_k}{b_k}$ for $a_k, b_k > 0$ (Pages 46–48)."
+    },
+    {
+      id: "q28", part: "C", type: "checkbox",
+      text: "Let $X = \\left\\{ \\{a_n\\}_{n=1}^\\infty : a_n \\in \\{0, 1\\} \\right\\}$ be the set of all binary sequences. Which of the following subsets of $X$ are COUNTABLE (or finite)?",
+      options: [
+        { key: "A", val: "$Y_1 = \\left\\{ \\{a_n\\} \\in X : a_n = 0 \\text{ for all but finitely many } n \\right\\}$" },
+        { key: "B", val: "$Y_6 = \\left\\{ \\{a_n\\} \\in X : a_{2i} + a_{2i-1} = 0 \\text{ for all } i \\in \\mathbb{N} \\right\\}$" },
+        { key: "C", val: "$Y_7 = \\left\\{ \\{a_n\\} \\in X : a_{2i} - a_{2i-1} = 1 \\text{ for all } i \\in \\mathbb{N} \\right\\}$" },
+        { key: "D", val: "$Y_8 = \\left\\{ \\{a_n\\} \\in X : \\text{only finitely many } a_n\\text{'s are zero} \\right\\}$" }
+      ],
+      ans: ["A", "B", "C", "D"],
+      exp: "<b>Correct Answer: (A, B, C, D)</b><br>(A) and (D) are countably infinite as countable unions of finite sets (Page 56–57). In (B), since $a_n \\in \\{0, 1\\}$, $a_{2i} + a_{2i-1} = 0 \\implies a_{2i} = a_{2i-1} = 0$ for all $i$, so $Y_6$ is a singleton set (finite). In (C), $a_{2i} - a_{2i-1} = 1 \\implies a_{2i} = 1, a_{2i-1} = 0$ for all $i$, so $Y_7$ is also a singleton set!"
+    },
+    {
+      id: "q29", part: "C", type: "checkbox",
+      text: "Let $X = \\left\\{ \\{a_n\\}_{n=1}^\\infty : a_n \\in \\{0, 1\\} \\right\\}$. Which of the following subsets of $X$ are UNCOUNTABLE?",
+      options: [
+        { key: "A", val: "$Y_2 = \\left\\{ \\{a_n\\} \\in X : a_{2n} = 0 \\text{ for all } n \\in \\mathbb{N} \\right\\}$" },
+        { key: "B", val: "$Y_3 = \\left\\{ \\{a_n\\} \\in X : a_1 \\ge a_2 \\right\\}$" },
+        { key: "C", val: "$Y_4 = \\left\\{ \\{a_n\\} \\in X : a_{p_n} = 0, \\text{ where } p_n \\text{ is the } n\\text{-th prime number} \\right\\}$" },
+        { key: "D", val: "$Y_9 = \\left\\{ \\{a_n\\} \\in X : a_n = 1 \\text{ for all } n \\ge 2024 \\right\\}$" }
+      ],
+      ans: ["A", "B", "C"],
+      exp: "<b>Correct Answer: (A, B, C)</b><br>In $Y_2, Y_3, Y_4$, there remain infinitely many indices where $a_k$ can freely be chosen from $\\{0, 1\\}$, so each has cardinality $2^{\\aleph_0} = \\mathfrak{c}$ (uncountable, Page 56–58). In $Y_9$, only the first 2023 terms are free, so $|Y_9| = 2^{2023}$, which is finite!"
+    },
+    {
+      id: "q30", part: "C", type: "checkbox",
+      text: "Let $X$ be an arbitrary set and let $\\mathcal{P}(X)$ denote its power set. Which of the following statements are necessarily true?",
+      options: [
+        { key: "A", val: "There exists an injective map from $X$ into $\\mathcal{P}(X)$, but there does NOT exist any surjective map from $X$ onto $\\mathcal{P}(X)$." },
+        { key: "B", val: "$\\mathcal{P}(X)$ is always in bijection with the set of all functions from $X$ to $\\{0, 1\\}$, i.e., $\\mathcal{P}(X) \\sim \\{0, 1\\}^X$." },
+        { key: "C", val: "There exists an infinite set $X$ such that $\\mathcal{P}(X)$ is countably infinite." },
+        { key: "D", val: "If $X$ is countably infinite, then the collection of all infinite subsets of $X$ is uncountable." }
+      ],
+      ans: ["A", "B", "D"],
+      exp: "<b>Correct Answer: (A, B, D)</b><br>(A) is Cantor's Theorem (Page 58). (B) is proved via indicator functions $A \\mapsto \\chi_A$ (Page 61). (C) is false: for any set $X$, $\\mathcal{P}(X)$ is either finite (if $X$ is finite) or uncountable (if $X$ is infinite) — it can NEVER be countably infinite (Page 60). (D) is true since $\\mathcal{P}(\\mathbb{N})$ is uncountable and finite subsets are countable."
+    },
+    {
+      id: "q31", part: "C", type: "checkbox",
+      text: "Let $\\aleph_0 = |\\mathbb{N}|$ and $\\mathfrak{c} = \\aleph_1 = 2^{\\aleph_0} = |\\mathbb{R}|$, and let $\\aleph_2 = 2^{\\aleph_1} = |\\mathcal{P}(\\mathbb{R})|$. Which of the following sets have cardinality equal to $\\mathfrak{c}$?",
+      options: [
+        { key: "A", val: "$\\mathbb{R}^{\\mathbb{N}}$ (The set of all real sequences)" },
+        { key: "B", val: "$\\mathbb{N}^{\\mathbb{N}}$ (The set of all sequences of natural numbers)" },
+        { key: "C", val: "$\\mathbb{Q}^{\\mathbb{Z}}$ (The set of all functions from $\\mathbb{Z}$ to $\\mathbb{Q}$)" },
+        { key: "D", val: "$\\mathbb{N}^{\\mathbb{R}}$ (The set of all functions from $\\mathbb{R}$ to $\\mathbb{N}$)" }
+      ],
+      ans: ["A", "B", "C"],
+      exp: "<b>Correct Answer: (A, B, C)</b><br>Using cardinal arithmetic (Pages 63–64): $|\\mathbb{R}^\\mathbb{N}| = \\mathfrak{c}^{\\aleph_0} = (2^{\\aleph_0})^{\\aleph_0} = 2^{\\aleph_0} = \\mathfrak{c}$. By Cantor-Bernstein, $2^{\\aleph_0} \\le \\aleph_0^{\\aleph_0} \\le (2^{\\aleph_0})^{\\aleph_0} = 2^{\\aleph_0}$, so $|\\mathbb{N}^\\mathbb{N}| = |\\mathbb{Q}^\\mathbb{Z}| = \\mathfrak{c}$. However, $|\\mathbb{N}^\\mathbb{R}| = \\aleph_0^{\\mathfrak{c}} = 2^{\\mathfrak{c}} = \\aleph_2 > \\mathfrak{c}$."
+    },
+    {
+      id: "q32", part: "C", type: "checkbox",
+      text: "Which of the following algebraic or matrix sets are COUNTABLE?",
+      options: [
+        { key: "A", val: "The polynomial rings $\\mathbb{Z}_2[x]$, $\\mathbb{Z}[x]$, and $\\mathbb{Q}[x]$." },
+        { key: "B", val: "The set $\\mathbb{A}$ of all algebraic numbers in $\\mathbb{C}$ (i.e., complex roots of non-zero polynomials in $\\mathbb{Q}[x]$)." },
+        { key: "C", val: "The set of all polynomials in $\\mathbb{R}[x]$ that have at least one rational root." },
+        { key: "D", val: "The set of all $2 \\times 2$ real matrices whose eigenvalues are rational numbers." }
+      ],
+      ans: ["A", "B"],
+      exp: "<b>Correct Answer: (A, B)</b><br>(A) and (B) are countable as countable unions of countable/finite sets (Pages 64–67). (C) is uncountable since $\\{\\alpha(x - 1) : \\alpha \\in \\mathbb{R} \\setminus \\{0\\}\\}$ is uncountable and each has root $x=1$. (D) is uncountable since $\\begin{pmatrix} 0 & \\alpha \\\\ 0 & 1 \\end{pmatrix}$ has rational eigenvalues $0, 1$ for every $\\alpha \\in \\mathbb{R}$ (Page 74)."
+    },
+    {
+      id: "q33", part: "C", type: "checkbox",
+      text: "Let $\\{A_n\\}_{n=1}^\\infty$ be a collection of non-empty pairwise disjoint subsets of $\\mathbb{Z}$ such that $\\mathbb{Z} = \\bigcup_{n=1}^\\infty A_n$. Which of the following statements are necessarily true?",
+      options: [
+        { key: "A", val: "$A_n$ is countable (either finite or countably infinite) for every integer $n \\ge 1$." },
+        { key: "B", val: "There exists at least one integer $n \\ge 1$ such that $A_n$ is finite." },
+        { key: "C", val: "There exists at least one integer $n \\ge 1$ such that $A_n$ is infinite." },
+        { key: "D", val: "If instead $\\mathbb{R} = \\bigcup_{n=1}^\\infty B_n$, then there must exist at least one $n \\ge 1$ such that $B_n$ is uncountable." }
+      ],
+      ans: ["A", "D"],
+      exp: "<b>Correct Answer: (A, D)</b><br>Every subset $A_n \\subseteq \\mathbb{Z}$ is at most countable, so (A) is true. We can partition $\\mathbb{Z}$ into finite sets $A_1=\\{0\\}, A_{n+1}=\\{-n, n\\}$ (so C is false), OR into infinite sets $A_m = \\{2^m p_k : p_k \\text{ prime}\\}$ for $m \\ge 1$ and $A_0 = \\mathbb{Z} \\setminus \\bigcup_{m \\ge 1} A_m$ (so B is false, Pages 69–70). (D) is true because a countable union of countable sets cannot equal the uncountable set $\\mathbb{R}$ (Page 71)."
+    },
+    {
+      id: "q34", part: "C", type: "checkbox",
+      text: "Let $S$ be an infinite set. Which of the following statements are necessarily true?",
+      options: [
+        { key: "A", val: "If there exists an injective function $f: S \\to \\mathbb{N}$, then $S$ is countably infinite." },
+        { key: "B", val: "If there exists a surjective function $g: \\mathbb{N} \\to S$, then $S$ is countably infinite." },
+        { key: "C", val: "If there exists an injective function $h: \\mathbb{N} \\to S$, then $S$ is countably infinite." },
+        { key: "D", val: "If there exists a surjective function $k: S \\to \\mathbb{N}$, then $S$ is countably infinite." }
+      ],
+      ans: ["A", "B"],
+      exp: "<b>Correct Answer: (A, B)</b><br>Since $S$ is infinite, $|S| \\ge \\aleph_0$. An injection $S \\to \\mathbb{N}$ or a surjection $\\mathbb{N} \\to S$ implies $|S| \\le |\\mathbb{N}| = \\aleph_0$, whence $|S| = \\aleph_0$ (Page 72–73). (C) and (D) are false for $S = \\mathbb{R}$ (e.g., $h(n) = n$ is 1-1 and $k(x) = [|x|] + 1$ is onto)."
+    },
+    {
+      id: "q35", part: "C", type: "checkbox",
+      text: "Let $S$ be an arbitrary infinite set. Assuming the Axiom of Choice, which of the following statements are ALWAYS true?",
+      options: [
+        { key: "A", val: "$S$ is in bijection with $S \\times S$, and more generally with $S^n$ for every $n \\in \\mathbb{N}$." },
+        { key: "B", val: "There exists a proper subset $A \\subsetneq S$ such that $A$ is in bijection with $S$." },
+        { key: "C", val: "The collection $\\mathcal{F}(S) = \\{A \\subseteq S : A \\text{ is finite}\\}$ is in bijection with $S$." },
+        { key: "D", val: "The collection $\\mathcal{I}(S) = \\{A \\subseteq S : A \\text{ is infinite}\\}$ is in bijection with $\\mathcal{P}(S)$." }
+      ],
+      ans: ["A", "B", "C", "D"],
+      exp: "<b>Correct Answer: (A, B, C, D)</b><br>All four are fundamental theorems of infinite cardinal arithmetic proved in the notes (Pages 49, 51, 72, 74): $|S^n| = |S|$, Dedekind-infiniteness $A \\subsetneq S$ with $A \\sim S$, $|\\mathcal{F}(S)| = |S|$, and $|\\mathcal{I}(S)| = |\\mathcal{P}(S)| = 2^{|S|} > |S|$."
+    }
+  ];
+
+  let activeQuestions = [];
+  let timerInterval = null;
+  let timeRemaining = 6000; // 100 Minutes for 40 Questions
+  let isSubmitted = false;
+  let studentName = "";
+
+  function startTestWithName() {
+    const input = document.getElementById("modalNameInput");
+    if (!input.value.trim()) {
+      alert("Please enter your name before starting the examination!");
+      return;
+    }
+    studentName = input.value.trim();
+    document.getElementById("navUserName").innerText = `Candidate: ${studentName}`;
+    document.getElementById("nameModal").style.display = "none";
+    startTimer();
+  }
+
+  function renderQuestions(shuffle = false) {
+    const partA = questionBank.filter(q => q.part === "A");
+    const partB = questionBank.filter(q => q.part === "B");
+    const partC = questionBank.filter(q => q.part === "C");
+
+    if (shuffle) {
+      partA.sort(() => Math.random() - 0.5);
+      partB.sort(() => Math.random() - 0.5);
+      partC.sort(() => Math.random() - 0.5);
+    }
+
+    activeQuestions = [...partA, ...partB, ...partC];
+
+    const aContainer = document.getElementById("partAContainer");
+    const bContainer = document.getElementById("partBContainer");
+    const cContainer = document.getElementById("partCContainer");
+    aContainer.innerHTML = "";
+    bContainer.innerHTML = "";
+    cContainer.innerHTML = "";
+
+    activeQuestions.forEach((q, idx) => {
+      const qNum = idx + 1;
+      const card = document.createElement("div");
+      card.className = "q-card";
+      card.id = `card-${q.id}`;
+
+      let badgeText = "";
+      if (q.part === "A") badgeText = "PART-A | General Aptitude (+2.0, -0.50)";
+      else if (q.part === "B") badgeText = "PART-B | Single Choice (+3.0, -0.75)";
+      else badgeText = "PART-C | Multiple Select (+4.75, 0)";
+
+      let optsHTML = "";
+      q.options.forEach(opt => {
+        optsHTML += `
+          <label class="opt-label" id="lbl-${q.id}-${opt.key}">
+            <input type="${q.type}" name="${q.id}" value="${opt.key}">
+            <span><b>(${opt.key})</b> ${opt.val}</span>
+          </label>
+        `;
+      });
+
+      card.innerHTML = `
+        <div class="q-header">
+          <span>QUESTION ${qNum}</span>
+          <span>${badgeText}</span>
+        </div>
+        <div class="q-text">${q.text}</div>
+        <div class="options-list">${optsHTML}</div>
+        <div class="sol-box" id="sol-${q.id}">
+          ${q.exp}
+        </div>
+      `;
+
+      if (q.part === "A") aContainer.appendChild(card);
+      else if (q.part === "B") bContainer.appendChild(card);
+      else cContainer.appendChild(card);
+    });
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise();
+    }
+  }
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    timeRemaining = 6000; // 100 mins
+    updateTimerUI();
+    timerInterval = setInterval(() => {
+      timeRemaining--;
+      updateTimerUI();
+      if (timeRemaining <= 0) {
+        clearInterval(timerInterval);
+        alert("Time is up! Your test is being submitted automatically.");
+        evaluateTest();
+      }
+    }, 1000);
+  }
+
+  function updateTimerUI() {
+    const mins = Math.floor(timeRemaining / 60);
+    const secs = timeRemaining % 60;
+    document.getElementById("timerDisplay").innerText =
+      `⏱ ${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+  }
+
+  function evaluateTest() {
+    if (isSubmitted) return;
+    isSubmitted = true;
+    clearInterval(timerInterval);
+
+    let totalScore = 0;
+    let correct = 0;
+    let wrong = 0;
+    let unattempted = 0;
+
+    activeQuestions.forEach(q => {
+      const selectedInputs = Array.from(document.querySelectorAll(`input[name="${q.id}"]:checked`));
+      const selectedVals = selectedInputs.map(i => i.value).sort();
+      const correctVals = q.ans.slice().sort();
+      const card = document.getElementById(`card-${q.id}`);
+      const solBox = document.getElementById(`sol-${q.id}`);
+
+      q.options.forEach(opt => {
+        const lbl = document.getElementById(`lbl-${q.id}-${opt.key}`);
+        if (correctVals.includes(opt.key)) {
+          lbl.style.background = "var(--correct-bg)";
+          lbl.style.borderColor = "var(--correct)";
+        }
+      });
+
+      if (selectedVals.length === 0) {
+        unattempted++;
+      } else {
+        const isExact = selectedVals.length === correctVals.length &&
+                        selectedVals.every((v, i) => v === correctVals[i]);
+        if (isExact) {
+          correct++;
+          if (q.part === "A") totalScore += 2.0;
+          else if (q.part === "B") totalScore += 3.0;
+          else totalScore += 4.75;
+          card.style.borderColor = "var(--correct)";
+          card.style.borderWidth = "2px";
+        } else {
+          wrong++;
+          if (q.part === "A") totalScore -= 0.50;
+          else if (q.part === "B") totalScore -= 0.75;
+          card.style.borderColor = "var(--wrong)";
+          card.style.borderWidth = "2px";
+          selectedVals.forEach(v => {
+            if (!correctVals.includes(v)) {
+              const lbl = document.getElementById(`lbl-${q.id}-${v}`);
+              lbl.style.background = "var(--wrong-bg)";
+              lbl.style.borderColor = "var(--wrong)";
+            }
+          });
+        }
+      }
+      solBox.style.display = "block";
+    });
+
+    document.querySelectorAll("#quizForm input").forEach(inp => inp.disabled = true);
+    document.getElementById("submitBtn").style.display = "none";
+
+    document.getElementById("bannerTitle").innerText = `Well Done, ${studentName}!`;
+    document.getElementById("resScore").innerText = totalScore.toFixed(2);
+    document.getElementById("resCorrect").innerText = correct;
+    document.getElementById("resWrong").innerText = wrong;
+    document.getElementById("resUnattempted").innerText = unattempted;
+    document.getElementById("scoreBanner").style.display = "block";
+
+    saveAttemptToHistory(studentName, totalScore.toFixed(2), correct, wrong, unattempted);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      MathJax.typesetPromise();
+    }
+  }
+
+  function resetAndShuffle() {
+    isSubmitted = false;
+    document.getElementById("scoreBanner").style.display = "none";
+    document.getElementById("submitBtn").style.display = "block";
+    document.querySelectorAll("#quizForm input").forEach(inp => inp.disabled = false);
+    renderQuestions(true);
+    startTimer();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function saveAttemptToHistory(name, score, c, w, u) {
+    const history = JSON.parse(localStorage.getItem("ra_ch1_40q_history") || "[]");
+    const now = new Date();
+    history.unshift({
+      name: name,
+      date: now.toLocaleDateString() + " " + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+      score: score,
+      correct: c,
+      wrong: w,
+      unattempted: u
+    });
+    localStorage.setItem("ra_ch1_40q_history", JSON.stringify(history.slice(0, 20)));
+    renderHistory();
+  }
+
+  function renderHistory() {
+    const history = JSON.parse(localStorage.getItem("ra_ch1_40q_history") || "[]");
+    const container = document.getElementById("historyContainer");
+    if (history.length === 0) {
+      container.innerHTML = `<p style="color:var(--muted); font-size:0.9rem; margin:8px 0 0 0;">No attempts recorded yet.</p>`;
+      return;
+    }
+    let rows = history.map((h, i) => `
+      <tr>
+        <td>#${history.length - i}</td>
+        <td><b>${h.name}</b></td>
+        <td>${h.date}</td>
+        <td><b style="color:var(--primary);">${h.score} / 150.00</b></td>
+        <td style="color:var(--correct)">${h.correct}</td>
+        <td style="color:var(--wrong)">${h.wrong}</td>
+        <td>${h.unattempted}</td>
+      </tr>
+    `).join("");
+
+    container.innerHTML = `
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Attempt</th>
+            <th>Candidate Name</th>
+            <th>Date & Time</th>
+            <th>Score</th>
+            <th>Correct</th>
+            <th>Wrong</th>
+            <th>Skipped</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+  }
+
+  function clearHistory() {
+    localStorage.removeItem("ra_ch1_40q_history");
+    renderHistory();
+  }
+
+  function downloadSelf() {
+    const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+    const blob = new Blob([htmlContent], { type: "text/html" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "CSIR_NET_Real_Analysis_Ch1_40Q_MATHYATRA.html";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  window.onload = () => {
+    renderQuestions(false);
+    renderHistory();
+  };
+</script>
+
+</body>
+</html>
